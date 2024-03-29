@@ -1,4 +1,4 @@
-pragma solidity ^0.5.4;
+pragma solidity ^0.8.0;
 
 contract Lottery {
     enum State {
@@ -32,7 +32,7 @@ contract Lottery {
         payable 
         inState(State.BETTING) {
         require(msg.value == betSize, 'can only bet exactly the bet size');
-        players.push(msg.sender);
+        players.push(payable(msg.sender));
         if(players.length == betCount ) {
             uint winner = _randomModulo(betCount);
             players[winner].transfer((betSize * betCount) * (100 - houseFee) / 100);
@@ -66,3 +66,4 @@ contract Lottery {
         _;
     }
 }
+
